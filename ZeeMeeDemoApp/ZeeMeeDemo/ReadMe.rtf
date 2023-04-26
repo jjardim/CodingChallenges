@@ -1,0 +1,155 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fswiss\fcharset0 Helvetica-Bold;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww9000\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+\
+The Demo app architecture 
+\f1\b MVVM
+\f0\b0  is laid out like this...\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b \cf0 Usage:\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b0 \cf0 Open app up - Type for a drink and hit enter\
+Open app up - Type for a drink, there is timeout and if no enter was tapped a search will kick off.   The timeout is stored in 
+\f1\b Constants  (AppBehavior.searchTimeout)\
+\
+
+\f0\b0 Tap on a cell and you will be directed to 
+\f1\b DetailView\
+
+\f0\b0 Dismiss the view, cancel out - Results will be cleared for another Drink query\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+
+\f1\b Network Folder\
+- 
+\f0\b0 Endpoints\
+- ClientErrors\
+- ServerErrors\
+
+\f1\b - NetworkService is what is initialized in 2 ViewModels\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b0 \cf0 The app has 2 Views and associated with ViewModels\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b \cf0 HomeSearchView\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b0 \cf0 List view with a Searchbar\
+Results get populated to list using Combine from the viewModel\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b \cf0 \
+HomeSearchVM\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b0 \cf0 Timer for delay search lives here\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b \cf0 NetworkService
+\f0\b0  is kicked off - Results get populated to property 
+\f1\b searchResults
+\f0\b0  in turn populates View
+\f1\b \
+SearchResultsDrinkModel
+\f0\b0  is used for data population of the cells\
+\
+\
+
+\f1\b DetailView\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b0 \cf0 Drink Details gets populated to list using Combine from the viewModel\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b \cf0 \
+\
+DetailVM\
+NetworkService
+\f0\b0  is kicked off \
+
+\f1\b DrinkDetailsModel
+\f0\b0  is return\
+\
+Next step is to combine 
+\f1\b strIngredient
+\f0\b0  and 
+\f1\b strMeasure.  
+\f0\b0 This was accomplished with 
+\f1\b Mirror
+\f0\b0  function as extension on the 
+\f1\b DrinkDetailsModel.\
+\pard\tx593\pardeftab593\partightenfactor0
+\cf0 fetchCocktailIngredience
+\f0\b0 () adds Tuples to an array for easy retrieval  \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+DetailResults get populated to property 
+\f1\b DrinkDetails 
+\f0\b0 in turn populates View
+\f1\b \
+\
+\
+Models\
+- DrinkSearchResults  
+\f0\b0 - Model used for 
+\f1\b HomeSearchView
+\f0\b0  and to populate 
+\f1\b DrinkCellView\
+- DrinkDetailsModel - 
+\f0\b0 Model used for 
+\f1\b DetailView\
+\
+\
+Unit Tests \
+ZeeMeeDemoTests \
+	
+\f0\b0 test_search_API \
+	test_details_API\
+\
+Both Unit Tests call an API and if the expected data is returned the test Passes\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b \cf0 UI Tests\
+ZeemeeDemoUITests\
+	 \
+	-test_app_functionality() 		\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b0 \cf0 		This UI test will launch the App, tap on the searhbar, type in a letter, once results are returned it will then tap on a cell and open DetailView.   \
+		Teardown will dismiss the view, and then cancel back and clear out search results\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b \cf0 \
+\
+Previews\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b0 \cf0 HomeSearchView\
+DetailView\
+DrinkCellView  
+\f1\b \
+\
+
+\f0\b0 Dark and Light Theme is avail \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b \cf0 \
+\
+}
